@@ -9,6 +9,7 @@ It uses:
 
 1. `flake.nix`
    - `username` (your macOS/Linux user, e.g. `kentarowaki`)
+   - Linux uses `$USER` (impure) for `home.username`; if unset it falls back to `ubuntu`
    - `darwinConfigurations."mac"` `system` (aarch64-darwin or x86_64-darwin)
    - `homeConfigurations."linux"` `pkgs` system (x86_64-linux or aarch64-linux)
 
@@ -41,7 +42,7 @@ sudo nix run nix-darwin -- switch --flake .#mac
 
 Linux:
 ```
-nix run home-manager -- switch --flake .#linux
+nix run home-manager -- switch --flake .#linux --impure
 ```
 
 For convenience, this flake also exposes:

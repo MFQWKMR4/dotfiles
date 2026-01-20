@@ -16,9 +16,22 @@ Cross-platform dotfiles for macOS + Linux (EC2). Bash + Git profile split + Lazy
    git-profile work
    ```
 
+## install.sh (what it does)
+`install.sh` creates symlinks from this repo to your home directory.
+Use it when you are **not** using Nix. It links:
+- `bash/` -> `~/.bashrc` `~/.bash_profile` `~/.bash_aliases`
+- `git/` -> `~/.gitconfig*` `~/.gitignore_global`
+- `nvim/` -> `~/.config/nvim`
+- `tmux/` -> `~/.tmux.conf`
+- `bin/git-profile` -> `~/.local/bin/git-profile`
+
 ## Nix (optional)
 This repo includes a Nix flake scaffold inspired by ryoppippi/dotfiles.
-See `docs/NIX.md` for setup and customization.
+If you want to use Nix, install it first:
+```sh
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+```
+Then see `docs/NIX.md` for setup and customization.
 
 ## QEMU (Apple Silicon quick Linux)
 Script: `scripts/qemu-ubuntu-arm64.sh`

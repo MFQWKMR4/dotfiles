@@ -26,7 +26,12 @@
     let
       username = "kentarowaki";
       darwinHome = "/Users/${username}";
-      linuxHome = "/home/${username}";
+      linuxUsername =
+        let
+          envUser = builtins.getEnv "USER";
+        in
+        if envUser != "" then envUser else "ubuntu";
+      linuxHome = "/home/${linuxUsername}";
 
       mkPkgs = system:
         import nixpkgs {
@@ -61,11 +66,11 @@
 
       homeConfigurations."linux" = home-manager.lib.homeManagerConfiguration {
         pkgs = mkPkgs "x86_64-linux";
-        extraSpecialArgs = { inherit username linuxHome; };
+        extraSpecialArgs = { inherit linuxUsername linuxHome; };
         modules = [
           ./nix/home.nix
           {
-            home.username = username;
+            home.username = linuxUsername;
             home.homeDirectory = linuxHome;
           }
         ];
