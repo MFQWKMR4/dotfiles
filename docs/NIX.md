@@ -44,7 +44,7 @@ sudo nix run nix-darwin -- switch --flake .#mac
 
 Linux:
 ```
-nix run home-manager -- switch --flake .#linux --impure
+nix run home-manager -- switch -b before-nix --flake .#linux --impure
 ```
 
 For convenience, this flake also exposes:

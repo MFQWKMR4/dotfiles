@@ -38,7 +38,7 @@ Then:
    ```
 2. Linux apply (Home Manager, uses `$USER`)
    ```sh
-   nix run home-manager -- switch --flake .#linux --impure
+   nix run home-manager -- switch -b before-nix --flake .#linux --impure
    ```
 
 ### Package profiles (minimal/full)
@@ -47,9 +47,9 @@ Packages are split into profiles. Use the flake target you want.
 Linux:
 ```sh
 # Minimal
-nix run home-manager -- switch --flake .#linux-minimal --impure
+nix run home-manager -- switch -b before-nix --flake .#linux-minimal --impure
 # Full
-nix run home-manager -- switch --flake .#linux-full --impure
+nix run home-manager -- switch -b before-nix --flake .#linux-full --impure
 ```
 
 macOS:
