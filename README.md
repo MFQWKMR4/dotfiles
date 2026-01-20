@@ -31,7 +31,36 @@ If you want to use Nix, install it first:
 ```sh
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 ```
-Then see `docs/NIX.md` for setup and customization.
+Then:
+1. macOS apply (nix-darwin + Home Manager)
+   ```sh
+   sudo nix run nix-darwin -- switch --flake .#mac
+   ```
+2. Linux apply (Home Manager, uses `$USER`)
+   ```sh
+   nix run home-manager -- switch --flake .#linux --impure
+   ```
+
+### Package profiles (minimal/full)
+Packages are split into profiles. Use the flake target you want.
+
+Linux:
+```sh
+# Minimal
+nix run home-manager -- switch --flake .#linux-minimal --impure
+# Full
+nix run home-manager -- switch --flake .#linux-full --impure
+```
+
+macOS:
+```sh
+# Minimal
+sudo nix run nix-darwin -- switch --flake .#mac-minimal
+# Full
+sudo nix run nix-darwin -- switch --flake .#mac-full
+```
+
+See `docs/NIX.md` for details and troubleshooting.
 
 ## QEMU (Apple Silicon quick Linux)
 Script: `scripts/qemu-ubuntu-arm64.sh`

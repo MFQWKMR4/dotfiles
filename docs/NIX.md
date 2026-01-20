@@ -19,7 +19,9 @@ It uses:
 3. Package profile
    - Minimal packages: `nix/profiles/minimal.nix`
    - Full packages: `nix/profiles/full.nix`
-   - Switch by changing the import in `nix/home.nix`
+   - Use flake targets instead of editing files:
+     - Linux: `.#linux-minimal` / `.#linux-full`
+     - macOS: `.#mac-minimal` / `.#mac-full`
 
 ## Install Nix
 

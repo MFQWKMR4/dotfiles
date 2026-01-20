@@ -5,6 +5,7 @@ VM_DIR="${VM_DIR:-$HOME/vm/ubuntu}"
 IMAGE_URL="${IMAGE_URL:-https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-arm64.img}"
 IMAGE_NAME="${IMAGE_NAME:-jammy-server-cloudimg-arm64.img}"
 SEED_NAME="${SEED_NAME:-seed.img}"
+OVERLAY_NAME="${OVERLAY_NAME:-vm.qcow2}"
 SSH_PUBKEY="${SSH_PUBKEY:-$HOME/.ssh/id_ed25519.pub}"
 USER_NAME="${USER_NAME:-ubuntu}"
 SSH_PORT="${SSH_PORT:-2223}"
@@ -13,6 +14,7 @@ CPU_CORES="${CPU_CORES:-4}"
 ACCEL="${ACCEL:-hvf}"
 QEMU_BIOS="${QEMU_BIOS:-}"
 QEMU_EXTRA_ARGS="${QEMU_EXTRA_ARGS:-}"
+DISK_GB="${DISK_GB:-10}"
 
 mkdir -p "$VM_DIR"
 cd "$VM_DIR"
@@ -26,6 +28,16 @@ fi
 if [ ! -f "$IMAGE_NAME" ]; then
   echo "Downloading cloud image..."
   curl -LO "$IMAGE_URL"
+fi
+
+DISK_IMAGE="$IMAGE_NAME"
+if [ "$DISK_GB" -gt 0 ]; then
+  if [ ! -f "$OVERLAY_NAME" ]; then
+    echo "Creating overlay disk: $OVERLAY_NAME (+${DISK_GB}G)"
+    qemu-img create -f qcow2 -F qcow2 -b "$IMAGE_NAME" "$OVERLAY_NAME" >/dev/null
+    qemu-img resize "$OVERLAY_NAME" "+${DISK_GB}G" >/dev/null
+  fi
+  DISK_IMAGE="$OVERLAY_NAME"
 fi
 
 cat > user-data <<EOF
@@ -82,6 +94,6 @@ qemu-system-aarch64 \
   "${BIOS_ARGS[@]}" \
   -device virtio-net-pci,netdev=net0 \
   -netdev user,id=net0,hostfwd=tcp::${SSH_PORT}-:22 \
-  -drive if=virtio,file="$IMAGE_NAME",format=qcow2 \
+  -drive if=virtio,file="$DISK_IMAGE",format=qcow2 \
   -drive if=virtio,file="$SEED_NAME",format=raw \
   "${EXTRA_ARGS[@]}"

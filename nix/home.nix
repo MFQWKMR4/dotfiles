@@ -1,12 +1,10 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, profile ? "minimal", ... }:
 let
   dotfilesDir = "${config.home.homeDirectory}/dotfiles";
   link = path: config.lib.file.mkOutOfStoreSymlink "${dotfilesDir}/${path}";
 in
 {
-  imports = [
-    ./profiles/full.nix
-  ];
+  imports = if profile == "full" then [ ./profiles/full.nix ] else [ ./profiles/minimal.nix ];
 
   home.stateVersion = "24.05";
 
