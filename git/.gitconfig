@@ -1,0 +1,18 @@
+[core]
+  excludesfile = ~/.gitignore_global
+  autocrlf = input
+
+[include]
+  path = ~/.gitconfig-local
+
+[pull]
+  rebase = false
+
+[init]
+  defaultBranch = main
+
+[includeIf "gitdir:~/work/"]
+  path = ~/.gitconfig-work
+
+[includeIf "gitdir:~/personal/"]
+  path = ~/.gitconfig-personal

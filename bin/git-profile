@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+profile="${1:-}"
+if [ -z "$profile" ]; then
+  echo "Usage: git-profile {personal|work}" >&2
+  exit 1
+fi
+
+case "$profile" in
+  personal|work) ;;
+  *)
+    echo "Unknown profile: $profile (use personal or work)" >&2
+    exit 1
+    ;;
+esac
+
+if [ -z "${DOTFILES_DIR:-}" ]; then
+  DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+fi
+
+src="$DOTFILES_DIR/git/.gitconfig-$profile"
+dest="$HOME/.gitconfig-local"
+
+ln -sfn "$src" "$dest"
+echo "Switched Git profile to $profile"

@@ -1,0 +1,6 @@
+[user]
+  name = KentaroWaki
+  email = wakkent@amazon.com
+
+[commit]
+  gpgsign = false
