@@ -67,9 +67,9 @@
         };
 
       mkLinux =
-        profile:
+        system: profile:
         home-manager.lib.homeManagerConfiguration {
-          pkgs = mkPkgs "x86_64-linux";
+          pkgs = mkPkgs system;
           extraSpecialArgs = { inherit linuxUsername linuxHome profile; };
           modules = [
             ./nix/home.nix
@@ -85,9 +85,9 @@
       darwinConfigurations."mac-full" = mkDarwin "full";
       darwinConfigurations."mac-minimal" = mkDarwin "minimal";
 
-      homeConfigurations."linux" = mkLinux "minimal";
-      homeConfigurations."linux-minimal" = mkLinux "minimal";
-      homeConfigurations."linux-full" = mkLinux "full";
+      homeConfigurations."linux" = mkLinux builtins.currentSystem "minimal";
+      homeConfigurations."linux-minimal" = mkLinux builtins.currentSystem "minimal";
+      homeConfigurations."linux-full" = mkLinux builtins.currentSystem "full";
 
       apps."aarch64-darwin".switch = mkApp "aarch64-darwin" "dotfiles-switch" ''
         exec sudo nix run nix-darwin -- switch --flake .#mac
