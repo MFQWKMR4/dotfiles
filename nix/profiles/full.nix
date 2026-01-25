@@ -7,7 +7,7 @@
   home.packages = with pkgs; [
     bat
     rustup
-    pkgs-config
+    pkg-config
     openssl
     eza
     qemu
