@@ -15,7 +15,6 @@ Cross-platform dotfiles for macOS + Linux (EC2). Bash + Git profile split + Lazy
    git-profile personal
    git-profile work
    ```
-
 ## install.sh (what it does)
 `install.sh` creates symlinks from this repo to your home directory.
 Use it when you are **not** using Nix. It links:
@@ -32,7 +31,7 @@ If you want to use Nix, install it first:
 curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 ```
 Then:
-1. macOS apply (nix-darwin + Home Manager)
+1. macsOS apply (nix-darwin + Home Manager)
    ```sh
    sudo nix run nix-darwin -- switch --flake .#mac
    ```

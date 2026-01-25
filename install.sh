@@ -10,12 +10,11 @@ link() {
   mkdir -p "$(dirname "$dest")"
   ln -sfn "$src" "$dest"
 }
-
 os_name="$(uname -s)"
 case "$os_name" in
-  Darwin) git_local="$DOTFILES_DIR/git/.gitconfig-personal" ;;
-  Linux) git_local="$DOTFILES_DIR/git/.gitconfig-personal" ;;
-  *) git_local="$DOTFILES_DIR/git/.gitconfig-personal" ;;
+Darwin) git_local="$DOTFILES_DIR/git/.gitconfig-personal" ;;
+Linux) git_local="$DOTFILES_DIR/git/.gitconfig-personal" ;;
+*) git_local="$DOTFILES_DIR/git/.gitconfig-personal" ;;
 esac
 
 link "$DOTFILES_DIR/bash/.bashrc" "$HOME/.bashrc"

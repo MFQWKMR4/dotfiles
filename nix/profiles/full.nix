@@ -6,6 +6,9 @@
 
   home.packages = with pkgs; [
     bat
+    rustup
+    pkgs-config
+    openssl
     eza
     qemu
     cloud-utils # For cloud-localds in scripts/qemu-ubuntu-arm64.sh
